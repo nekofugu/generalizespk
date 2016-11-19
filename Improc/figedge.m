@@ -2,7 +2,7 @@
 % there box is denoted by two bright lines separated by a fixed distance
 
 
-function [edge, iml, imr] = figedge (img, lmdst, lmstr, border)
+function [edge, iml, imr] = figedge (img, lmdst, lmdif, lmstr, border)
 
 isize = size(img);
 
@@ -10,8 +10,8 @@ isize = size(img);
 lshft = img (:, 1:(end-lmdst));
 rshft = img (:, (1+lmdst):end);
 diff = rshft - lshft;
-nodiff = diff == 0;
-hlight = lshft == lmstr;
+nodiff = abs(diff) <= lmdif;
+hlight = lshft >= lmstr;
 lmark = nodiff & hlight;
 
 % it's so thin you can't see it
